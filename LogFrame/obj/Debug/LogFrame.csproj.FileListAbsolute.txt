@@ -1,0 +1,15 @@
+H:\logUtil\LogFrame\bin\Debug\LogFrame.exe.config
+H:\logUtil\LogFrame\bin\Debug\LogFrame.exe
+H:\logUtil\LogFrame\bin\Debug\LogFrame.pdb
+H:\logUtil\LogFrame\bin\Debug\CsharpServer.dll
+H:\logUtil\LogFrame\bin\Debug\gen-csharp.dll
+H:\logUtil\LogFrame\bin\Debug\Thrift.dll
+H:\logUtil\LogFrame\bin\Debug\CsharpServer.pdb
+H:\logUtil\LogFrame\bin\Debug\gen-csharp.pdb
+H:\logUtil\LogFrame\bin\Debug\Thrift.pdb
+H:\logUtil\LogFrame\obj\Debug\LogFrame.csprojResolveAssemblyReference.cache
+H:\logUtil\LogFrame\obj\Debug\LogFrame.Properties.Resources.resources
+H:\logUtil\LogFrame\obj\Debug\LogFrame.csproj.GenerateResource.Cache
+H:\logUtil\LogFrame\obj\Debug\LogFrame.exe
+H:\logUtil\LogFrame\obj\Debug\LogFrame.pdb
+H:\logUtil\LogFrame\obj\Debug\LogFrame.Form1.resources

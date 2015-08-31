@@ -1,0 +1,10 @@
+H:\logUtil\CsharpServer\bin\Release\CsharpServer.dll.config
+H:\logUtil\CsharpServer\bin\Release\CsharpServer.dll
+H:\logUtil\CsharpServer\bin\Release\CsharpServer.pdb
+H:\logUtil\CsharpServer\bin\Release\gen-csharp.dll
+H:\logUtil\CsharpServer\bin\Release\Thrift.dll
+H:\logUtil\CsharpServer\bin\Release\Thrift.pdb
+H:\logUtil\CsharpServer\bin\Release\gen-csharp.pdb
+H:\logUtil\CsharpServer\obj\Release\CsharpServer.csprojResolveAssemblyReference.cache
+H:\logUtil\CsharpServer\obj\Release\CsharpServer.dll
+H:\logUtil\CsharpServer\obj\Release\CsharpServer.pdb

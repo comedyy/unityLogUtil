@@ -1,0 +1,5 @@
+H:\logUtil\csharp\src\bin\Release\Thrift.dll
+H:\logUtil\csharp\src\bin\Release\Thrift.pdb
+H:\logUtil\csharp\src\obj\Release\Thrift.csprojResolveAssemblyReference.cache
+H:\logUtil\csharp\src\obj\Release\Thrift.dll
+H:\logUtil\csharp\src\obj\Release\Thrift.pdb

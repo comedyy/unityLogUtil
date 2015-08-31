@@ -1,0 +1,17 @@
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\bin\Debug\CsharpClient.exe
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\bin\Debug\CsharpClient.pdb
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\bin\Debug\Thrift.dll
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\bin\Debug\Thrift.pdb
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\obj\Debug\CsharpClient.csprojResolveAssemblyReference.cache
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\obj\Debug\CsharpClient.exe
+C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpClient\obj\Debug\CsharpClient.pdb
+H:\logUtil\CsharpClient\obj\Debug\CsharpClient.exe
+H:\logUtil\CsharpClient\obj\Debug\CsharpClient.pdb
+H:\logUtil\CsharpClient\obj\Debug\CsharpClient.csprojResolveAssemblyReference.cache
+H:\logUtil\CsharpClient\bin\Debug\CsharpClient.exe
+H:\logUtil\CsharpClient\bin\Debug\CsharpClient.pdb
+H:\logUtil\CsharpClient\bin\Debug\gen-csharp.dll
+H:\logUtil\CsharpClient\bin\Debug\Thrift.dll
+H:\logUtil\CsharpClient\bin\Debug\Thrift.pdb
+H:\logUtil\CsharpClient\bin\Debug\gen-csharp.pdb
+H:\logUtil\CsharpClient\bin\Debug\CsharpClient.exe.config
