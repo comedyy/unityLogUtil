@@ -8,7 +8,7 @@ using System.Threading.Tasks;
     {
         public static Filter Instatnce = new Filter();
 
-        private int _logType = (int)LogType.COMMON | (int)LogType.ERROR | (int)LogType.EXCEPTION | (int)LogType.WARNING;
+        private int _logType = (int)UtilLogType.COMMON | (int)UtilLogType.ERROR | (int)UtilLogType.EXCEPTION | (int)UtilLogType.WARNING;
         public void SetLogType(int logType)
         {
             if (_logType != logType)

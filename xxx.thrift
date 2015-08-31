@@ -1,5 +1,4 @@
-
-enum LogType {
+enum UtilLogType {
   COMMON = 1,
   WARNING = 2,
   ERROR = 4,
@@ -7,11 +6,12 @@ enum LogType {
 }
 
 struct LogInfo {
-  1: LogType logType,
-  2: i32 time,
-  3: string DeviceName,
-  4: string category,
-  5: string content,
+  1: i32 id,
+  2: UtilLogType logType,
+  3: i32 time,
+  4: string DeviceName,
+  5: string category,
+  6: string content,
 }
 
 service SendLog {

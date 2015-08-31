@@ -13,7 +13,7 @@
         /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
         protected override void Dispose(bool disposing)
         {
-            isStop = true;
+            _isStop = true;
             StopSocketThread();
             if (disposing && (components != null))
             {

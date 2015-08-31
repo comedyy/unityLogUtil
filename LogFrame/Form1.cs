@@ -14,95 +14,95 @@ namespace LogFrame
 {
     public partial class Form1 : Form
     {
-        Thread socketThread = null;
-        int nDefaultPort = 9090;
-        bool isStop = false;
-        Dictionary<LogType, Color> _dicColor = new Dictionary<LogType, Color>();
-        Dictionary<LogType, CheckBox> _dicCheckBox = new Dictionary<LogType, CheckBox>();
-        Dictionary<LogType, Label> _dicCountLabel = new Dictionary<LogType, Label>();
-        bool defalutPause = false;
-        bool defaultSearchUp = false;
-        string strDefaultPath = "C://MYLOG.txt";
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer() { };
+
+        int _nDefaultPort = 9090;
+        bool _defalutPause = false;
+        bool _defaultSearchUp = false;
+        string _strDefaultPath = "C://MYLOG.txt";
+
+        bool _isStop = false;
+        int _readIndex = 0;     // 界面显示到了第几个log
+       
+        // log类型和颜色，控件
+        Dictionary<UtilLogType, Color> _dicColor = new Dictionary<UtilLogType, Color>();
+        Dictionary<UtilLogType, CheckBox> _dicCheckBox = new Dictionary<UtilLogType, CheckBox>();
+        Dictionary<UtilLogType, Label> _dicCountLabel = new Dictionary<UtilLogType, Label>();
 
         public Form1()
         {
             InitializeComponent();
 
-            _dicColor[LogType.COMMON] = Color.Gray;
-            _dicColor[LogType.WARNING] = Color.Orange;
-            _dicColor[LogType.ERROR] = Color.Red;
-            _dicColor[LogType.EXCEPTION] = Color.DeepPink;
+            _dicColor[UtilLogType.COMMON] = Color.Gray;
+            _dicColor[UtilLogType.WARNING] = Color.Orange;
+            _dicColor[UtilLogType.ERROR] = Color.Red;
+            _dicColor[UtilLogType.EXCEPTION] = Color.DeepPink;
 
-            _dicCheckBox[LogType.COMMON] = checkBoxCommon;
-            _dicCheckBox[LogType.WARNING] = checkBoxWarning;
-            _dicCheckBox[LogType.ERROR] = checkBoxError;
-            _dicCheckBox[LogType.EXCEPTION] = checkBoxException;
+            _dicCheckBox[UtilLogType.COMMON] = checkBoxCommon;
+            _dicCheckBox[UtilLogType.WARNING] = checkBoxWarning;
+            _dicCheckBox[UtilLogType.ERROR] = checkBoxError;
+            _dicCheckBox[UtilLogType.EXCEPTION] = checkBoxException;
 
-            _dicCountLabel[LogType.COMMON] = labelCommonCount;
-            _dicCountLabel[LogType.WARNING] = labelWarningCount;
-            _dicCountLabel[LogType.ERROR] = labelErrorCount;
-            _dicCountLabel[LogType.EXCEPTION] = labelExceptionCount;
+            _dicCountLabel[UtilLogType.COMMON] = labelCommonCount;
+            _dicCountLabel[UtilLogType.WARNING] = labelWarningCount;
+            _dicCountLabel[UtilLogType.ERROR] = labelErrorCount;
+            _dicCountLabel[UtilLogType.EXCEPTION] = labelExceptionCount;
 
-            DataMgr.Instance.OnLogCome = new Action<LogInfo>(AddToUI);
-            DataMgr.Instance.IsPause = defalutPause;
+            DataMgr.Instance.IsPause = _defalutPause;
             
             this.richTextBox1.BackColor = Color.Black;
-            this.textBoxPort.Text = "" + nDefaultPort;
+            this.textBoxPort.Text = "" + _nDefaultPort;
 
-            foreach (LogType type in Enum.GetValues(typeof(LogType)))
+            foreach (UtilLogType type in Enum.GetValues(typeof(UtilLogType)))
             {
                 _dicCheckBox[type].Checked = true;
                 _dicCheckBox[type].ForeColor = _dicColor[type];
                 _dicCountLabel[type].ForeColor = _dicColor[type];
             }
 
-            checkBoxUp.Checked = defaultSearchUp;
-            textBoxFilePath.Text = strDefaultPath;
+            checkBoxUp.Checked = _defaultSearchUp;
+            textBoxFilePath.Text = _strDefaultPath;
 
-            StartSocketThread(nDefaultPort);
+            StartSocketThread(_nDefaultPort);
+
+            timer.Tick += new EventHandler(timer_Tick);
+            timer.Enabled = true;
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            List<LogInfo> lstLogInfo = DataMgr.Instance.GetUnReadLog(ref _readIndex, 88);
+            lstLogInfo.ForEach(m =>
+            {
+                AddToUI(m);
+            });
         }
 
         // 重新载入数据
         private void ReLoadData()
         {
             // 界面重置
-            lock (this)
-            {
                 this.richTextBox1.Text = "";
-                foreach (LogType type in Enum.GetValues(typeof(LogType)))
+                foreach (UtilLogType type in Enum.GetValues(typeof(UtilLogType)))
                 {
                     _dicCountLabel[type].Text = "0";
                 }
-            }
 
-            // 开始往界面添加元素
-            lock (DataMgr.Instance.LstData)
-            {
-                DataMgr.Instance.LstData.ForEach(m =>
-                {
-                    AddToUI(m);
-                });
-            }
+            _readIndex = 0;
         }
 
         // 添加一条到uI
         private void AddToUI(LogInfo log) 
         {
             AddLogCount(log.LogType, 1);
-            if (Filter.Instatnce.IsFilterOK(log))
-            {
-                Color color = GetSelectionColor(log);
-                string strContent = GetSelectionInfo(log);
-                AddInfo(strContent, color);
-            }
+            Color color = GetSelectionColor(log);
+            string strContent = GetSelectionInfo(log);
+            AddInfo(strContent, color);
         }
 
-        private void AddLogCount(LogType type, int nCount)
+        private void AddLogCount(UtilLogType type, int nCount)
         {
-            lock (this)
-            {
-                _dicCountLabel[type].Text = (int.Parse(_dicCountLabel[type].Text) + nCount) + "";
-            }
+            _dicCountLabel[type].Text = (int.Parse(_dicCountLabel[type].Text) + nCount) + "";
         }
 
         // 设置画笔颜色
@@ -114,7 +114,13 @@ namespace LogFrame
         // 返回log内容
         private string GetSelectionInfo(LogInfo log) 
         {
-            return "[" + log.Category + "][" + log.Time + "][" + log.LogType.ToString() +"]:" + log.Content + "\n";
+            return "[" + log.Id+ "][" + log.Category + "][" + GetTime(log.Time) + "][" + log.LogType.ToString() + "]:" + log.Content + "\n";
+        }
+
+        private string GetTime(int microSecond) 
+        {
+            return string.Format("{0:D2}:{1:D2}:{2:D2}.{3:D3}"
+                , microSecond / 1000 / 3600, (microSecond / 1000 / 60) % 60, (microSecond / 1000) % 60, microSecond % 1000);
         }
 
         // 启动socket监听
@@ -126,7 +132,7 @@ namespace LogFrame
                 CSharpServer.StartSocket(nPort, AddAppInfo);
             });
 
-            socketThread = new Thread(start);
+            Thread socketThread = new Thread(start);
             socketThread.Start();
         }
 
@@ -156,13 +162,10 @@ namespace LogFrame
         // 输出到窗口
         public void AddInfo(string strInfo, Color color)
         {
-            if (this.richTextBox1 != null && !isStop)
+            if (!_isStop)
             {
-                lock (this.richTextBox1)
-                {
-                    this.richTextBox1.SelectionColor = color;
-                    this.richTextBox1.AppendText(strInfo + "\n");
-                }
+                this.richTextBox1.SelectionColor = color;
+                this.richTextBox1.AppendText(strInfo + "\n");
             }
         }
 
@@ -184,10 +187,10 @@ namespace LogFrame
         // 筛选各种异常
         private void OnCheckChange() 
         {
-            int logType = (this.checkBoxCommon.Checked ? 1 : 0) * (int)LogType.COMMON
-                              + (this.checkBoxWarning.Checked ? 1 : 0) * (int)LogType.WARNING
-                              + (this.checkBoxError.Checked ? 1 : 0) * (int)LogType.ERROR
-                              + (this.checkBoxException.Checked ? 1 : 0) * (int)LogType.EXCEPTION;
+            int logType = (this.checkBoxCommon.Checked ? 1 : 0) * (int)UtilLogType.COMMON
+                              + (this.checkBoxWarning.Checked ? 1 : 0) * (int)UtilLogType.WARNING
+                              + (this.checkBoxError.Checked ? 1 : 0) * (int)UtilLogType.ERROR
+                              + (this.checkBoxException.Checked ? 1 : 0) * (int)UtilLogType.EXCEPTION;
 
             AddAppInfo("当前过滤器logType：" + logType);
             Filter.Instatnce.SetLogType(logType);
@@ -236,13 +239,10 @@ namespace LogFrame
         // 清空
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            lock (DataMgr.Instance.LstData)
-            {
-                DataMgr.Instance.LstData = new List<LogInfo>();
-            }
+            DataMgr.Instance.Clear();
 
             ReLoadData();
-            AddAppInfo("清空消息缓冲, 剩余数量" + DataMgr.Instance.LstData.Count);
+            AddAppInfo("清空了消息缓冲");
         }
 
 
@@ -253,16 +253,9 @@ namespace LogFrame
         {
             // 查找的字符串不存在
             string strFind = textBoxFind.Text;
-            if (string.IsNullOrEmpty(strFind))
+            if (string.IsNullOrEmpty(strFind) || richTextBox1.TextLength <= 0)
             {
                 return;
-            }
-
-            // 取消选中状态
-            if (richTextBox1.TextLength >= _lastPos + _lastLen)
-            {
-                richTextBox1.Select(_lastPos, _lastLen);
-                richTextBox1.SelectionBackColor = Color.Black;
             }
 
             // 方向
@@ -286,6 +279,13 @@ namespace LogFrame
                                                       | (checkBoxWhole.Checked ? RichTextBoxFinds.WholeWord : RichTextBoxFinds.None);
             int pos = richTextBox1.Find(strFind, posBegin, posEnd, options);
 
+            // 取消选中状态
+            if (richTextBox1.TextLength >= _lastPos + _lastLen)
+            {
+                richTextBox1.Select(_lastPos, _lastLen);
+                richTextBox1.SelectionBackColor = Color.Black;
+            }
+
             // 找到了设置高亮并且滚动到那里
             if (pos != -1)
             {
@@ -296,20 +296,32 @@ namespace LogFrame
                 _lastPos = pos;
                 _lastLen = strFind.Length;
             }
+            else 
+            {
+                if (checkBoxUp.Checked)
+                {
+                    richTextBox1.SelectionStart = richTextBox1.TextLength;
+                    richTextBox1.SelectionLength = 0;
+                }
+                else 
+                {
+                    richTextBox1.SelectionStart = 0;
+                    richTextBox1.SelectionLength = 0;
+                }
+            }
         }
 
         private void buttonWriteFile_Click(object sender, EventArgs e)
         {
             string strPath = textBoxFilePath.Text;
-            lock (DataMgr.Instance.LstData)
+            int logIndex = 0;
+            List<LogInfo> lstLogInfo = DataMgr.Instance.GetUnReadLog(ref logIndex);
+            using (FileStream fs = new FileStream(strPath, FileMode.Create))
             {
-                using (FileStream fs = new FileStream(strPath, FileMode.Create))
-                {
-                    byte[] data = new UTF8Encoding().GetBytes(richTextBox1.Text);
-                    fs.Write(data, 0, data.Length);
-                    fs.Flush();
-                    fs.Close();
-                }
+                byte[] data = new UTF8Encoding().GetBytes(richTextBox1.Text);
+                fs.Write(data, 0, data.Length);
+                fs.Flush();
+                fs.Close(); 
             }
         }
     }

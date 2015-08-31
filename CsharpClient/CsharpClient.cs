@@ -48,7 +48,7 @@ namespace CSharpTutorial
                         info.Content = strContent;
                         strContent += i;
                         info.DeviceName = i.ToString();
-                        info.LogType = (LogType)(2 << ran.Next(4));
+                        info.UtilLogType = (UtilLogType)(2 << ran.Next(4));
                         info.Time = (int)DateTime.UtcNow.Ticks;
                         info.Category = "category" + i;
                         lstLogInfo.Add(info);

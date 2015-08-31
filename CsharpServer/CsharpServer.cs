@@ -34,10 +34,7 @@ public class CalculatorHandler : SendLog.Iface
 
     public void log(List<LogInfo> lstLogInfo)
     {
-        lstLogInfo.ForEach((m) =>
-        {
-            DataMgr.Instance.AddLog(m);
-        });
+        DataMgr.Instance.AddLog(lstLogInfo);
     }
 }
 
