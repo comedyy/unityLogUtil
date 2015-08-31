@@ -1,7 +1,0 @@
-H:\logUtil\gen-csharp\bin\Debug\gen-csharp.dll
-H:\logUtil\gen-csharp\bin\Debug\gen-csharp.pdb
-H:\logUtil\gen-csharp\bin\Debug\Thrift.dll
-H:\logUtil\gen-csharp\bin\Debug\Thrift.pdb
-H:\logUtil\gen-csharp\obj\Debug\gen-csharp.csprojResolveAssemblyReference.cache
-H:\logUtil\gen-csharp\obj\Debug\gen-csharp.dll
-H:\logUtil\gen-csharp\obj\Debug\gen-csharp.pdb

@@ -5,13 +5,3 @@ C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpServer
 C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpServer\obj\Debug\CsharpServer.csprojResolveAssemblyReference.cache
 C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpServer\obj\Debug\CsharpServer.exe
 C:\Users\jetion\Downloads\thrift-0.9.2\thrift-0.9.2\tutorial\csharp\CsharpServer\obj\Debug\CsharpServer.pdb
-H:\logUtil\CsharpServer\obj\Debug\CsharpServer.csprojResolveAssemblyReference.cache
-H:\logUtil\CsharpServer\obj\Debug\CsharpServer.pdb
-H:\logUtil\CsharpServer\bin\Debug\CsharpServer.pdb
-H:\logUtil\CsharpServer\bin\Debug\gen-csharp.dll
-H:\logUtil\CsharpServer\bin\Debug\Thrift.dll
-H:\logUtil\CsharpServer\bin\Debug\Thrift.pdb
-H:\logUtil\CsharpServer\bin\Debug\gen-csharp.pdb
-H:\logUtil\CsharpServer\bin\Debug\CsharpServer.dll.config
-H:\logUtil\CsharpServer\bin\Debug\CsharpServer.dll
-H:\logUtil\CsharpServer\obj\Debug\CsharpServer.dll
