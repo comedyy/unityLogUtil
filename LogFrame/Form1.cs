@@ -71,11 +71,27 @@ namespace LogFrame
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            bool isReset = false;
             List<LogInfo> lstLogInfo = DataMgr.Instance.GetUnReadLog(ref _readIndex, 88);
-            lstLogInfo.ForEach(m =>
+            for (int i = 0; i < lstLogInfo.Count; i++ )
             {
-                AddToUI(m);
-            });
+                LogInfo m = lstLogInfo[i];
+                if (m.Category == "ResetLogMirror")
+                {
+                    isReset = true;
+                    DataMgr.Instance.PopFirst();
+                    break;
+                }
+                else
+                {
+                    AddToUI(m);
+                }
+            }
+
+            if (isReset) 
+            {
+                ReLoadData();
+            }
         }
 
         // 重新载入数据

@@ -14,6 +14,8 @@ public class DataMgr
     // 是否暂停
     public bool IsPause { get; set; }
 
+    public bool isReset = false;
+
     // 网络层添加的log
     public void AddLog(List<LogInfo> lstLogInfo)
     {
@@ -24,13 +26,39 @@ public class DataMgr
 
         lock (lstData)
         {
-            lstData.AddRange(lstLogInfo);
+            foreach (LogInfo item in lstLogInfo)
+            {
+                if (item.Category == "ResetLogMirror")
+                {
+                    lstData = new List<LogInfo>();
+                    isReset = true;
+                }
+
+                lstData.Add(item);
+            }
+        }
+    }
+
+    public void PopFirst()
+    {
+        lock (lstData)
+        {
+            if (lstData.Count >0)
+            {
+                lstData.RemoveAt(0);
+            }
         }
     }
 
     // 取得未显示的log
     public List<LogInfo> GetUnReadLog(ref int nBeginIndex, int maxCount = 99999999) 
     {
+        if (isReset)
+        {
+            nBeginIndex = 0;
+            isReset = false;
+        }
+
         List<LogInfo> lstLogInfo = new List<LogInfo>() ;
         lock (lstData)
         {

@@ -25,6 +25,8 @@ public class ThriftClient
         this.strIp = strIp;
         this.nPort = port;
 
+        SendLog("", "ResetLogMirror");
+
         try
         {
             transport = new TSocket(strIp, port);
@@ -79,7 +81,7 @@ public class ThriftClient
 
     public void SendLog(string content = "测试Log", string category = "default", UtilLogType type = UtilLogType.COMMON) 
     {
-        if (!transport.IsOpen)
+        if (transport != null && !transport.IsOpen)
         {
             return;
         }
@@ -120,7 +122,6 @@ public class ThriftClient
 
         try
         {
-            Debug.Log("发送了LOG个数" + lstInfo.Count);
             client.send_log(lstInfo);
         }
         catch (System.Exception ex)
